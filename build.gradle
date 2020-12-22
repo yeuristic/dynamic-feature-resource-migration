@@ -1,0 +1,124 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+}
+plugins {
+    id 'maven'
+    id 'java'
+    id 'java-gradle-plugin'
+    id "com.jfrog.bintray" version "1.8.1"
+    id "maven-publish"
+    id 'org.jetbrains.kotlin.jvm' version '1.3.72'
+}
+
+gradlePlugin {
+    plugins {
+        simplePlugin {
+            id = 'com.yeuristic.dynamic-feature-resource-migration'
+            implementationClass = 'com.yeuristic.DynamicFeatureResourceMigration'
+        }
+    }
+}
+
+group 'com.yeuristic'
+version '0.1.0'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    google()
+    mavenLocal()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'com.android.tools.build:gradle:3.6.0'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+javadoc.failOnError = false
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "yeuristic"
+            name "Yusuf Cahyo N"
+            email "cahyo.yusuf@gmail.com"
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar {
+                classifier "sources"
+            }
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+            groupId 'com.yeuristic'
+            artifactId 'dynamic-feature-resource-migration'
+            version '0.1.0'
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'For migrating resources in Android dynamic feature module project')
+                root.appendNode('name', 'Dynamic Feature Resource Migration')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintray {
+    user = System.getProperty('bintray.user')
+    key = System.getProperty('bintray.key')
+    publications = ['mavenPublication']
+    publish = true
+
+    pkg {
+        repo = 'dynamic-feature-resource-migration'
+        name = 'dynamic-feature-resource-migration'
+        userOrg = 'yeuristic'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/yeuristic/dynamic-feature-resource-migration'
+        version {
+            name = '0.1.0'
+            desc = '0.1.0'
+            released  = new Date()
+        }
+    }
+
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
