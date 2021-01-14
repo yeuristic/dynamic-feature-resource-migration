@@ -35,6 +35,9 @@ change ```<your application package>``` with your application package, if you do
 
 # How to run migration
 1. Select dynamic feature module target, let's say we are targeting module named dynamicfeature.  
-2. Run ```./gradlew --build-cache dynamicfeature:migrateDynamicModule```  
+2. Run ```./gradlew --build-cache dynamicfeature:migrateDynamicModule```.  
 3. After it is finished, there will be some changes in your .kt or .java files.  
-4. If you want to run it for another module just change **dynamicfeature** with the new target module. Eg: ```./gradlew --build-cache otherdynamicfeature:migrateDynamicModule```
+4. If you want to run it for another module just change **dynamicfeature** with the new target module. Eg: ```./gradlew --build-cache otherdynamicfeature:migrateDynamicModule```.  
+
+# Example
+Checkout this example [project](https://github.com/yeuristic/dynamic-feature-resource-migration-example).
