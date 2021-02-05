@@ -1,10 +1,12 @@
-package com.yeuristic.migration
+package com.yeuristic.migration.java
 
 import com.yeuristic.ResourceData
+import com.yeuristic.migration.BaseRMigrationHandler
+import com.yeuristic.migration.replaceRPattern
 import java.io.File
 import java.lang.StringBuilder
 
-object JavaFileRMigrationHandler : BaseRMigrationHandler  {
+object JavaFileRMigrationHandler : BaseRMigrationHandler {
     override fun handleMigration(
         file: File,
         baseRFullPath: String,

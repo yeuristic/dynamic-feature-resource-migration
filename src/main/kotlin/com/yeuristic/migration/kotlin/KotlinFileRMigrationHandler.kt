@@ -1,6 +1,8 @@
-package com.yeuristic.migration
+package com.yeuristic.migration.kotlin
 
 import com.yeuristic.ResourceData
+import com.yeuristic.migration.BaseRMigrationHandler
+import com.yeuristic.migration.replaceRPattern
 import java.io.File
 import java.lang.StringBuilder
 import java.util.regex.Pattern
