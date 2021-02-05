@@ -4,12 +4,15 @@ buildscript {
         mavenCentral()
         jcenter()
     }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:latest.release"
+    }
 }
 plugins {
     id 'maven'
     id 'java'
     id 'java-gradle-plugin'
-    id "com.jfrog.bintray" version "1.8.1"
+    id "com.jfrog.artifactory" version "4.20.0"
     id "maven-publish"
     id 'org.jetbrains.kotlin.jvm' version '1.3.72'
 }
@@ -24,7 +27,7 @@ gradlePlugin {
 }
 
 group 'com.yeuristic'
-version '0.1.0'
+version '0.2.0'
 
 repositories {
     mavenCentral()
@@ -84,7 +87,7 @@ publishing {
             }
             groupId 'com.yeuristic'
             artifactId 'dynamic-feature-resource-migration'
-            version '0.1.0'
+            version '0.2.0'
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'For migrating resources in Android dynamic feature module project')
@@ -95,25 +98,21 @@ publishing {
     }
 }
 
-bintray {
-    user = System.getProperty('bintray.user')
-    key = System.getProperty('bintray.key')
-    publications = ['mavenPublication']
-    publish = true
+artifactoryPublish {
+    publications(publishing.publications.mavenPublication)
+}
 
-    pkg {
-        repo = 'dynamic-feature-resource-migration'
-        name = 'dynamic-feature-resource-migration'
-        userOrg = 'yeuristic'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/yeuristic/dynamic-feature-resource-migration'
-        version {
-            name = '0.1.0'
-            desc = '0.1.0'
-            released  = new Date()
+artifactory {
+    contextUrl = "https://yeuristic.jfrog.io/artifactory"
+    publish {
+        repository {
+
+            repoKey = "dynamic-feature-resource-migration"
+            username = System.getProperty('jfrog.user')
+            password = System.getProperty('jfrog.password')
+            maven = true
         }
     }
-
 }
 
 compileKotlin {
