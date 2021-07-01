@@ -1,22 +1,22 @@
 # Setup
 In project build.gradle, do:
-1. Add ```maven { url "https://yeuristic.jfrog.io/artifactory/dynamic-feature-resource-migration"``` in the repositories block
+1. Add ```maven { url 'https://jitpack.io'``` in the repositories block
 ``` gradle
 repositories {
     maven {
-        url "https://yeuristic.jfrog.io/artifactory/dynamic-feature-resource-migration"
+        url url 'https://jitpack.io'
     }
     google()
     jcenter()
     ...
 }
 ```
-2. Add ```classpath "com.yeuristic:dynamic-feature-resource-migration:0.2.0"``` in the dependencies block
+2. Add ```classpath "com.github.yeuristic:dynamic-feature-resource-migration:master-SNAPSHOT"``` in the dependencies block
 ``` gradle
 dependencies {
     classpath "com.android.tools.build:gradle:4.1.1"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath "com.yeuristic:dynamic-feature-resource-migration:0.2.0"
+    classpath "com.github.yeuristic:dynamic-feature-resource-migration:master-SNAPSHOT"
     ...
 }
 ```

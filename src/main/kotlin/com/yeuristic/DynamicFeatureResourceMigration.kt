@@ -23,7 +23,7 @@ class DynamicFeatureResourceMigration : Plugin<Project> {
                             task.doLast {
                                 val rTxtPath =
                                     "${project.buildDir.path}/intermediates/runtime_symbol_list/${variant.name}/R.txt"
-                                val srcPath = project.properties["srcPath"] as? String ?: "./${project.name}/src/"
+                                val srcPath = project.properties["srcPath"] as? String ?: "${project.name}/src/"
                                 MigrateBaseR.migrateBaseR(
                                     srcPath,
                                     baseRFullName,
